@@ -8,8 +8,8 @@ from datetime import datetime
 
 
 
-youtube_api_key = 'AIzaSyBnZ6bOz1znv964enxvhCYFbAWxTbExna4'
-my_channel = 'UCIAT9Lh_L8vSYeb7wEO3YuQ'
+youtube_api_key = 'YOUR_API_KEY'
+my_channel = 'YOUR_CHANNEL_ID'
 
 
 
