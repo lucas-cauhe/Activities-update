@@ -38,8 +38,7 @@ get_subs_channels()
 def get_subs_activities():
     with open('data.json') as file: # Abriendo el archivo data.json y tomando la fecha actual
         data = json.load(file)
-        range_ids = range(0, len(channels_ids))
-        for i in range_ids:
+        for i in channels_ids:
             get_activity = f'https://www.googleapis.com/youtube/v3/activities?part=snippet&channelId={ channels_ids[i] }&publishedAfter={ data["lastDate"][0]["lastLocalDate"] }&key={ youtube_api_key }'
             response_act = requests.get(get_activity)
             json_act = response_act.json()
@@ -70,8 +69,7 @@ get_local_date()
 
 def launch_browser():
     if len(active_channels_ids) != 0:
-        channels_range = range(0, len(active_channels_ids))
-        for channel in channels_range:
+        for channel in active_channels_ids:
             url = f'https://www.youtube.com/channel/{ active_channels_ids[channel] }'
             web.open(url, new=1, autoraise=True)
     else:
