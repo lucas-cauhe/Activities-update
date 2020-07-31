@@ -11,26 +11,24 @@ from datetime import datetime
 youtube_api_key = 'YOUR_API_KEY'
 my_channel = 'YOUR_CHANNEL_ID'
 
-
+get_subscription = f'https://www.googleapis.com/youtube/v3/subscriptions?part=snippet&channelId={ my_channel }&maxResults=10&key={ youtube_api_key }'
 
 
 channels_ids = []
 active_channels_ids = []
 
 # Obtener las ids de los canales que estoy suscrito y meterlos en channels_ids
-def get_subs_channels():
-    get_subscription = f'https://www.googleapis.com/youtube/v3/subscriptions?part=snippet&channelId={ my_channel }&maxResults=10&key={ youtube_api_key }'
+def get_subs_channels(get_subscription):
     response_sub = requests.get(get_subscription)
     json_sub = response_sub.json()
     num_subscriptions = json_sub['pageInfo']['totalResults']
     range_subscriptions = range(0, num_subscriptions)
-    def range_subs():
-        for sub in range_subscriptions:
-            get_ids = json_sub['items'][sub]['snippet']['resourceId']['channelId']
-            channels_ids.append(get_ids)
-    range_subs()
+    for sub in range_subscriptions:
+        get_ids = json_sub['items'][sub]['snippet']['resourceId']['channelId']
+        channels_ids.append(get_ids)
     
-get_subs_channels()
+    
+get_subs_channels(get_subscription)
 
 
 # Obtener las ids de los canales que han subido video después de x tiempo 
@@ -44,11 +42,10 @@ def get_subs_activities():
             json_act = response_act.json()
             num_act = json_act['pageInfo']['totalResults']
             range_act = range(0, num_act)
-            def take_ids():
-                for act in range_act:
-                    channel_active_id = json_act['items'][act]['snippet']['channelId'] 
-                    active_channels_ids.append(channel_active_id)
-            take_ids()
+            for act in range_act:
+                channel_active_id = json_act['items'][act]['snippet']['channelId'] 
+                active_channels_ids.append(channel_active_id)
+            
 get_subs_activities()
 
 def get_local_date():
